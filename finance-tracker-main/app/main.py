@@ -10,11 +10,11 @@ app = FastAPI(title="Finance Tracker", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["*"], allow_headers=["*"])
 
+@app.get("/health")
+def health(): return {"status": "ok"}
+
 app.include_router(auth.router)
 app.include_router(expenses.router)
 app.include_router(budgets.router)
 app.include_router(reports.router)
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
-@app.get("/health")
-def health(): return {"status": "ok"}
